@@ -6,16 +6,28 @@ public class Department {
     private String name;
 
     private Integer oId;
+ 
+    //
+    private String oName;
+    
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getoId() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getoId() {
 		return oId;
 	}
 
@@ -23,11 +35,18 @@ public class Department {
 		this.oId = oId;
 	}
 
-	public String getName() {
-        return name;
-    }
+	public String getoName() {
+		return oName;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public void setoName(String oName) {
+		this.oName = oName;
+	}
+
+	@Override
+	public String toString() {
+		return "Department [id=" + id + ", name=" + name + ", oId=" + oId + ", oName=" + oName + "]";
+	}
+
+    
 }

@@ -96,16 +96,19 @@
 				}
 				System.out.println("up.jspfrom："+from);
   %>
-  
+        <input type="hidden" value="${userName}" id="userId" name="userId"/>
+        <input type="hidden" value="${userId}" id="userName" name="userName"/>
+        
         <div class="inner">
             <div>
 			<a href="/format/" class="siteLogo"></a>
 			</div>
             <div class="nav">
                 <ul>
-                    <li><a href="#">组织</a></li>
-                    <li><a href="#">部门</a></li>
-                    <li><a href="#">管理员</a></li>
+                
+                    <li><a href="/format/page/superAdminToIndex?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">组织</a></li>
+                    <li><a href="/format/page/superAdminToBm?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">部门</a></li>
+                    <li><a href="/format/page/superAdminToGly?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">管理员</a></li>
                 </ul>
             </div>
            
@@ -118,7 +121,7 @@
 				  <ul id="navigation">
 						<li onmouseover="displaySubMenu(this)" onmouseout="hideSubMenu(this)"> 
 						    <a href="#">
-						    ${superAdmin.name}
+						    ${userName}
 						     <c:if test="${requestScope.unReadMsgNum!=0}">
 						    <span class="unread">${requestScope.unReadMsgNum }</span>
 						    </c:if>

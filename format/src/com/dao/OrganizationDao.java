@@ -15,7 +15,7 @@ public class OrganizationDao {
 		String sql=null; 
 		ResultSet rst=null;
 		PreparedStatement ptmt=null;
-		sql="SELECT * FROM format.organization;";
+		sql="SELECT * FROM format.organization order by id asc;";
         Connection conn = ConnectionManager.getInstance().getConnection();
         
        
@@ -99,5 +99,33 @@ public class OrganizationDao {
 	ConnectionManager.close(conn,ptmt);
     return false;
 		
+	}
+
+	public boolean addOrganization(String addName) {
+		// TODO Auto-generated method stub
+		
+
+		String sql=null; 
+		PreparedStatement ptmt=null;
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        sql="INSERT INTO `format`.`organization` (`name`) VALUES (?);";
+
+        try {
+    		ptmt = conn.prepareStatement(sql);
+    		ptmt.setString(1,addName);
+    		int rs = ptmt.executeUpdate();
+    		if(rs!=0)
+    		{
+    			ConnectionManager.close(conn,ptmt);
+    			return true;
+    		}
+        } catch (SQLException e) {
+    		// TODO Auto-generated catch block
+    		ConnectionManager.close(conn,ptmt);
+    		return false;
+    	}
+		
+        ConnectionManager.close(conn,ptmt);
+		return false;
 	}
 }
