@@ -3,11 +3,13 @@ package com.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,9 +22,9 @@ import com.model.*;
 public class UserController {
 	
 	@RequestMapping("/login")
-	public String login(String id,String password,String duty,HttpServletRequest request) throws SQLException
+	public String login(Model model,String id,String password,String duty,HttpServletRequest request) throws SQLException
 	{
-		System.out.println("lll");
+		
 		boolean isRight=false;
 		UserDao ud=new UserDao();
 		isRight=ud.checkLogin(id, password, duty);
@@ -30,14 +32,20 @@ public class UserController {
 		if(isRight==true)
 	{
 		request.setAttribute("login_status", 1);
-	    
+	    //
+		OrganizationDao od=new OrganizationDao();
+		List<Organization> orgList = od.getOrganizationList();
+		model.addAttribute("orgList",orgList);
+		
 		if(duty.equals("admin"))
 		{
 			AdminDao ad=new AdminDao();
 			Admin admin=new Admin();
 			admin=ad.GetAdmin(id);
 			request.setAttribute("admin", admin);
-			return "/jsp/admin/adminIndex";
+			request.setAttribute("userId", admin.getId());
+			request.setAttribute("userName", admin.getName());
+			return "/jsp/admin/index";
 		}
 		else if(duty.equals("auditor"))
 		{
@@ -45,7 +53,7 @@ public class UserController {
 			Auditor auditor=new Auditor();
 			auditor=ad.GetAuditor(id);
 			request.setAttribute("auditor", auditor);
-			return "/jsp/auditor/auditorIndex";
+			return "/jsp/auditor/index";
 		}
 		else if(duty.equals("committer"))
 		{
@@ -53,7 +61,7 @@ public class UserController {
 			Committer committer=new Committer();
 			committer=cd.GetCommitter(id);
 			request.setAttribute("committer", committer);
-			return "/jsp/committer/committerIndex";
+			return "/jsp/committer/index";
 		}
 		else if(duty.equals("superAdmin"))
 		{
@@ -61,7 +69,9 @@ public class UserController {
 			SuperAdmin superAdmin=new SuperAdmin();
 			superAdmin=sd.GetSuperAdmin(id);
 			request.setAttribute("superAdmin", superAdmin);
-			return "/jsp/superAdmin/superAdminIndex";
+			request.setAttribute("userId", superAdmin.getId());
+			request.setAttribute("userName", superAdmin.getName());
+			return "/jsp/superAdmin/index";
 		}
 	}
 		request.setAttribute("login_status", 0);

@@ -9,13 +9,13 @@ import com.util.ConnectionManager;
 
 public class DepartmentDao {
 
-	public List<Department> getDepartmentList(int oId)
+	public List<Department> getDepartmentList()
 	{
 		List<Department> list=new ArrayList<Department>();
 		String sql=null; 
 		ResultSet rst=null;
 		PreparedStatement ptmt=null;
-		sql="SELECT * FROM format.organization;";
+		sql="select organization.id as oId,organization.name as oName,department.id,department.name from organization,department where department.oid=organization.id;";
         Connection conn = ConnectionManager.getInstance().getConnection();
         
        
@@ -27,6 +27,8 @@ public class DepartmentDao {
 	        	Department department=new Department();
 	        	department.setId(rst.getInt("id"));
 	        	department.setName(rst.getString("name"));
+	        	department.setoId(rst.getInt("oId"));
+	        	department.setoName(rst.getString("oName"));
 	        	list.add(department);
 	        }
 			
@@ -74,7 +76,7 @@ public class DepartmentDao {
         
 	}
 	
-	public boolean deleteDepartment(int id,int oId)
+	public boolean deleteDepartment(int id)
 	{
 		String sql=null; 
 		PreparedStatement ptmt=null;
@@ -100,4 +102,52 @@ public class DepartmentDao {
     return false;
 		
 	}
+
+	public boolean addDepartment(String addName, String orgName) {
+		// TODO Auto-generated method stub
+		String sql=null,sqlFindId=null; 
+		int oId=0;
+		PreparedStatement ptmt=null;
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        sqlFindId="select id from organization where name=?";
+        sql="INSERT INTO `format`.`department` (`name`, `oid`) VALUES (£¿, £¿);";
+
+        try {
+    		ptmt = conn.prepareStatement(sqlFindId);
+    		ptmt.setString(1,orgName);
+    		ResultSet rs = ptmt.executeQuery();
+            while(rs.next())
+    		{
+    			oId=rs.getInt("id");
+    		}
+        } catch (SQLException e) {
+    		// TODO Auto-generated catch block
+    		ConnectionManager.close(conn,ptmt);
+    		return false;
+    	}
+        
+	try {
+		ptmt = conn.prepareStatement(sql);
+		ptmt.setString(1,addName);
+		ptmt.setInt(2,oId);
+        int rs = ptmt.executeUpdate();
+        if(rs!=0)
+		{
+			ConnectionManager.close(conn,ptmt);
+			return true;
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		ConnectionManager.close(conn,ptmt);
+		return false;
+	}
+	ConnectionManager.close(conn,ptmt);
+    return false;
+		
+		
+		
+	}
+	
+	
 }
