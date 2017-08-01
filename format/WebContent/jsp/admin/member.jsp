@@ -45,7 +45,7 @@
 <!-- table -->		
         <table id="table"
            data-toggle="table"
-           data-url="/format/admin/getList" 
+           data-url="/format/committer/getList?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>"  
            data-filter-control="true"
            data-filter-show-clear="true"
            data-pagination="true"
@@ -61,7 +61,7 @@
 			<th data-field="name" data-editable="false" data-sortable="true" >姓名</th>
 			<th data-field="telephone" data-editable="false" data-sortable="true">联系方式</th>
 			<th data-field="email" data-editable="false" data-sortable="true" >邮箱</th>
-            <th data-field="oName" data-filter-control="select">所属组织</th>
+            <th data-field="dName" data-filter-control="select">学院</th>
             <th data-formatter="operateFormatter" data-events="operateEvents"
 						data-sortable="false">操作</th>
         </tr>

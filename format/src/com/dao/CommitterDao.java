@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.model.Committer;
 import com.util.ConnectionManager;
@@ -38,6 +40,44 @@ public class CommitterDao {
 		ConnectionManager.close(conn,rst,ptmt);
 		return committer;
 		
+	}
+
+	public List<Committer> getCommitterForAdminList(String userId) {
+		// TODO Auto-generated method stub
+		 
+		List<Committer> list=new ArrayList<Committer>();
+		String sql=null; 
+		ResultSet rst=null;
+		PreparedStatement ptmt=null;
+		sql="select committer.id,committer.name,committer.department.name as dName from committer,department,organization,admin where admin.oid=organization.id and department.oid=organization.id and committer.did=department.id and admin.id=?;";
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        
+       
+		try {
+			ptmt = conn.prepareStatement(sql);
+			ptmt.setString(1,userId);
+			rst=ptmt.executeQuery();
+	        while(rst.next())
+	        {
+	        	Committer committer=new Committer();
+	        	committer.setId(rst.getString("id"));
+	        	committer.setName(rst.getString("name"));
+	        	committer.setdName(rst.getString("dName"));
+	        	committer.setTelephone(rst.getString("telephone"));
+	        	committer.setEmail(rst.getString("email"));
+	        	list.add(committer);
+	        }
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			ConnectionManager.close(conn,rst,ptmt);
+	        return null;
+		}
+         
+        
+        ConnectionManager.close(conn,rst,ptmt);
+        return list;
 	}
 	
 }

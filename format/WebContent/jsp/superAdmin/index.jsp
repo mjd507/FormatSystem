@@ -11,23 +11,25 @@
 <link rel="stylesheet"
 	href="/format/assets/bootstrap-table/src/bootstrap-table.css">
 <link rel="stylesheet" href="/format/assets/examples.css">
-<link rel="stylesheet"
-	href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
 
 <script src="/format/assets/jquery.min.js"></script>
 <script src="/format/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="/format/assets/bootstrap-table/src/bootstrap-table.js"></script>
 <script
 	src="/format/assets/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js"></script>
-<script
-	src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script src="/format/js/ga.js"></script>
 
 <script
 	src="/format/assets/bootstrap-table/src/extensions/reorder-columns/bootstrap-table-reorder-columns.js"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script
+<!-- <script
 	src="https://rawgit.com/akottr/dragtable/master/jquery.dragtable.js"></script>
+<script
+	src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<link rel="stylesheet"
+	href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
+
+ -->
 </head>
 
 
@@ -49,8 +51,17 @@
 			<br>
 			
 		</div>
-
-		<table id="table" 
+           <table id="table"
+           data-toggle="table"
+           data-url="/format/department/getList" 
+           data-filter-control="true"
+           data-filter-show-clear="true"
+           data-pagination="true"
+           data-show-export="true"
+           data-search="true"
+           data-row-style="rowStyle" >
+           <!-- 
+           <table id="table" 
 		    data-toggle="table" 
 		    data-pagination="true"
 			data-show-export="true" 
@@ -66,11 +77,13 @@
 			data-search="true" 
 			data-show-toggle="true"
 			data-reorderable-columns="true">
+            -->
+		
 			<thead>
 				<tr>
 					<th data-field="state" data-checkbox="true"></th>
-					<th data-field="id" data-editable="true" data-sortable="true">编号</th>
-					<th data-field="name" data-editable="true" data-sortable="true">名称</th>
+					<th data-field="id" data-editable="false" data-sortable="true">编号</th>
+					<th data-field="name" data-editable="false" data-sortable="true">名称</th>
 					<th data-formatter="operateFormatter" data-events="operateEvents"
 						data-sortable="false">操作</th>
 				</tr>

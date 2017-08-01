@@ -11,11 +11,15 @@
     <link href="<%=request.getContextPath()%>/css/colrankf.css" rel='stylesheet' type='text/css' />
     <link href="<%=request.getContextPath()%>/css/lbtf.css" rel='stylesheet' type='text/css' />
     <link href="<%=request.getContextPath()%>/font-awesome-4.7.0/css/font-awesome.min.css" rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/message.css" media="screen" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/dropdownlist.css" media="screen" type="text/css" />
     <script src="<%=request.getContextPath()%>/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/message.js"></script>
-    <script type="text/javascript">
+    <!-- 
+    <script src="<%=request.getContextPath()%>/js/cbs.js"></script>
+    <script src="<%=request.getContextPath()%>/js/lbt.js"></script>
+     -->    
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/message.css" media="screen" type="text/css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/message.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/dropdownlist.css" media="screen" type="text/css" />
+ <script type="text/javascript">
 
 			function displaySubMenu(li) { 
 				var subMenu = li.getElementsByTagName("ul")[0]; 
@@ -25,21 +29,87 @@
 				var subMenu = li.getElementsByTagName("ul")[0]; 
 				subMenu.style.display = "none"; 
 				} 
-   </script>
+</script>
  </head>
 <body>   
 <div class="header-top">
- <div class="inner">
+ <% 
+   String proName= this.getServletContext().getContextPath()+"/";//项目名称 
+  
+   //当前页面链接
+  String uri= (String)pageContext.getRequest().getAttribute("javax.servlet.forward.request_uri");
+  //用于action
+    if(uri!=null)
+  {
+     uri=uri.replace(proName, "");
+     //out.println("uri:"+uri);
+  }
+    else
+  {
+    	//out.println("uri:null");
+  }
+  String qs=request.getQueryString();
+  System.out.println("QueryString:"+qs);
+  //用于jsp
+     
+	  String url=request.getRequestURL().toString();
+	 // out.println("url:"+url);
+	 
+	 String address=null;//登录前页面
+				String adType=null;//登录前页面类型：action。。。
+				//结果为action
+				if(uri!=null&&!uri.equals("null"))
+				{
+					//uri中含有?代表request是url编码，地址就为uri
+					//非url编码，qs若为空，则处理uri
+					if(qs!=null)
+					{
+					
+						if(!qs.equals("null")&&uri.indexOf("?")==-1)
+						{
+							address=uri+"?"+qs;
+						}
+					}
+					else
+						address=uri;
+					adType="action";
+				}
+				//结果为jsp
+				else if(url!=null&&!url.equals("null"))
+				{
+					url=url.substring(url.indexOf("bcnf/")+5);
+					if(qs!=null)
+					{
+						if(!qs.equals("null")&&url.indexOf("?")==-1)//有参数的jsp或html
+							address=url+"?"+qs;
+					}
+					
+					else
+						address=url;
+					adType="jsp";
+				}
+				String from=address;
+				if(from!=null)
+				{
+					from=from.replace("&", "&amp;");
+					from=URLEncoder.encode(from,"UTF-8");
+				}
+				System.out.println("up.jspfrom："+from);
+  %>
+        <input type="hidden" value="${userName}" id="userId" name="userId"/>
+        <input type="hidden" value="${userId}" id="userName" name="userName"/>
+        
+        <div class="inner">
             <div>
 			<a href="/format/" class="siteLogo"></a>
 			</div>
             <div class="nav">
                 <ul>
-                    
-                    <li><a href="#">部门管理</a></li>
-                    <li><a href="#">成员管理</a></li>
-                    <li><a href="#">审核情况</a> 
-                    <li><a href="#">数据统计</a> 
+                
+                    <li><a href="/format/page/adminToIndex?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">部门管理</a></li>
+                    <li><a href="/format/page/adminToMember?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">成员管理</a></li>
+                    <li><a href="/format/page/adminToAudit?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">审核情况</a></li>
+                    <li><a href="/format/page/adminToData?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">数据统计</a></li>
                 </ul>
             </div>
            
@@ -52,7 +122,7 @@
 				  <ul id="navigation">
 						<li onmouseover="displaySubMenu(this)" onmouseout="hideSubMenu(this)"> 
 						    <a href="#">
-						    ${admin.name}
+						    ${userName}
 						     <c:if test="${requestScope.unReadMsgNum!=0}">
 						    <span class="unread">${requestScope.unReadMsgNum }</span>
 						    </c:if>

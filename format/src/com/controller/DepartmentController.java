@@ -98,6 +98,27 @@ System.out.println("------------getlist");
 		}
 
 	
+	@RequestMapping("/getListForAdmin")
+	public @ResponseBody String getListForAdmin(String userId,HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("------------getlist");
+        if(userId==null)return null;
+		DepartmentDao od = new DepartmentDao();
+		List<Department> list = od.getDepartmentForAdminList(userId);
 
+		JSONArray array = new JSONArray();
+		Iterator itor = list.iterator();
+		while (itor.hasNext()) {
+			Department temp = (Department) itor.next();
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("id", temp.getId());
+			jsonObj.put("name", temp.getName());
+			jsonObj.put("oName", temp.getoName());
+			jsonObj.put("oId", temp.getoId());
+			array.add(jsonObj);
+		}
+
+		return array.toString();
+
+	}
 
 }
