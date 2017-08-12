@@ -4,17 +4,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>格文致知—超级管理主页</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/format/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/format/assets/bootstrap-table/src/bootstrap-table.css">
-    <link rel="stylesheet" href="/format/assets/examples.css">
-    <script src="/format/assets/jquery.min.js"></script>
-    <script src="/format/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/format/assets/bootstrap-table/src/bootstrap-table.js"></script>
-    <script src="/format/assets/bootstrap-table/src/extensions/filter-control/bootstrap-table-filter-control.js"></script>
-        <script src="/format/assets/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js"></script>
-    <script src="/format/js/ga.js"></script>
+<title>格文致知—超级管理主页</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/format/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/format/assets/bootstrap-table/src/bootstrap-table.css">
+<link rel="stylesheet" href="/format/assets/examples.css">
+<script src="/format/assets/jquery.min.js"></script>
+<script src="/format/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/format/assets/bootstrap-table/src/bootstrap-table.js"></script>
+<script src="/format/assets/bootstrap-table/src/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+<script src="/format/assets/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="/format/js/ga.js"></script>
 <!-- 
 <script src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
    <link rel="stylesheet"href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
@@ -25,9 +25,7 @@
 <body style='background: url("<%=request.getContextPath()%>/images/6.jpg") no-repeat;'>
      <jsp:include page="up.jsp" />
      <div class="container" style="min-height: 800px; min-width: 1000px;">
-  		${superAdmin.name}
-   		
-		<div id="toolbar">
+  		<div id="toolbar">
 			<button id="delete" class="btn btn-default">批量删除</button>
 			<button id="load" class="btn btn-default">刷新</button>
 			<div class="col-md-2 column"style="float:right">

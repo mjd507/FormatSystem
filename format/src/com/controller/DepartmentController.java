@@ -24,7 +24,7 @@ public class DepartmentController {
 
 	@RequestMapping("/getList")
 	public @ResponseBody String getList(HttpServletRequest request, HttpServletResponse response) {
-System.out.println("------------getlist");
+        //System.out.println("------------getlist");
 		DepartmentDao od = new DepartmentDao();
 		List<Department> list = od.getDepartmentList();
 
@@ -96,10 +96,25 @@ System.out.println("------------getlist");
 		if(b==false)
 			 model.addAttribute("message","添加失败");
 		else model.addAttribute("message","操作成功");
-        return "/jsp/superAdmin/bm";
+        return "/jsp/superAdmin/department";
 
 		}
 
+	
+	@RequestMapping("/addByoId")
+	public String addByoId(Model model,String oId,String addName) {
+
+		DepartmentDao od = new DepartmentDao();
+		int oIdInt=Integer.parseInt(oId);
+		System.out.println("addByoId"+oIdInt+addName);
+		
+		boolean b=od.addDepartment(addName,oIdInt);
+		if(b==false)
+			 model.addAttribute("message","添加失败");
+		else model.addAttribute("message","操作成功");
+        return "/jsp/admin/index";
+
+		}
 	
 	@RequestMapping("/getListForAdmin")
 	public @ResponseBody String getListForAdmin(String userId,HttpServletRequest request, HttpServletResponse response) {

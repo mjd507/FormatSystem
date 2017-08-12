@@ -25,15 +25,18 @@
 <body style='background: url("<%=request.getContextPath()%>/images/6.jpg") no-repeat;'>
      <jsp:include page="up.jsp" />
      <div class="container" style="min-height: 800px; min-width: 1000px;">
-  		${superAdmin.name}
-   		
-		<div id="toolbar">
+  		<div id="toolbar">
 			<button id="delete" class="btn btn-default">批量删除</button>
 			<button id="load" class="btn btn-default">刷新</button>
-			
-			<a href="/format/page/adminToMember?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">提交者</a>
-		    <a href="/format/page/adminToAuditor?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>">审核者</a>
+			<a href="/format/jsp/admin/committer.jsp">提交者</a>
+		    <a href="/format/jsp/admin/auditor.jsp">审核者</a>
 		
+			<!-- 
+		
+		<a href="/format/page/adminToMember?userName=<%=session.getAttribute("userName")%>&userId=<%=session.getAttribute("userId")%>">提交者</a>
+		    <a href="/format/page/adminToAuditor?userName=<%=session.getAttribute("userName")%>&userId=<%=session.getAttribute("userId")%>">审核者</a>
+		
+		 -->
 			<span style="color:red">${message}</span>
 			<br>
 			<br>
@@ -45,14 +48,14 @@
 		<div class="col-md-2 column"style="float:right">
 							<a id="modal-createTopic" href="#modal-container-217103"
 								role="button" class="btn  btn-success glyphicon glyphicon-plus"
-								data-toggle="modal" style="font-size: 15px;float:right">新建成员</a>
+								data-toggle="modal" style="font-size: 15px;float:right">新建提交者</a>
 		</div>
 		<br>
 		<br>
 <!-- table -->		
         <table id="table"
            data-toggle="table"
-           data-url="/format/committer/getList?userName=<%=request.getAttribute("userName")%>&userId=<%=request.getAttribute("userId")%>"  
+           data-url="/format/committer/getList?userName=<%=session.getAttribute("userName")%>&userId=<%=session.getAttribute("userId")%>"  
            data-filter-control="true"
            data-filter-show-clear="true"
            data-pagination="true"
@@ -82,7 +85,7 @@
 						<div class="modal-header">
 							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h4 class="modal-title" id="myModalLabel">
-								新建成员
+								新建提交者
 							</h4>
 							
 						</div>
@@ -93,21 +96,21 @@
 							 <div class="row clearfix">
 											<div class="col-md-12 column">
 												<form class="form-horizontal" role="form"
-													action="/format/admin/add" method="POST" onsubmit="return checkAdmin()"
+													action="/format/committer/add" method="POST" onsubmit="return checkAdmin()"
 													enctype="multipart/form-data">
 													
 													<div class="form-group">
 														<label for="addId" class="col-md-2 control-label">分配组织</label>
 														<div class="col-md-10">
-														 <c:if test="${orgList!=null}">
-															<select style="width:150px" class="form-control" id="orgName" name="orgName">
-				            	                              <c:forEach var="orgList" items="${requestScope.orgList}">
+														 <c:if test="${depList!=null}">
+															<select style="width:150px" class="form-control" id="adddName" name="adddName">
+				            	                              <c:forEach var="depList" items="${sessionScope.depList}">
 				            	                              
-				            		                          <option value="${orgList.name}">${orgList.name}</option>
+				            		                          <option value="${depList.name}">${depList.name}</option>
 				            		                          </c:forEach>   	
 			                                               </select>
 			                                               </c:if>
-			                                               <c:if test="${orgList==null}">
+			                                               <c:if test="${depList==null}">
 			                                               服务器暂无数据，无法新建
 			                                               </c:if>
 														</div>

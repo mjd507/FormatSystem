@@ -102,15 +102,15 @@ public class AuditorController {
 	}
 	
 	@RequestMapping("/add")
-	public void add(Model model,String addName,String addId,String adddName) {
+	public String add(Model model,String addName,String addId,String adddName) {
 
 		AuditorDao ad = new AuditorDao();
 		boolean b=ad.addAuditor(addId,addName,adddName);
 		if(b==false)
 			 model.addAttribute("message","添加失败");
 		else model.addAttribute("message","操作成功");
-		 System.out.println(b);
-        //return "/jsp/superAdmin/index";
+		 //System.out.println(b);
+        return "/jsp/admin/auditor";
 
 	}
 }

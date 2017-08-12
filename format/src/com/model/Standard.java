@@ -64,4 +64,10 @@ public class Standard {
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
     }
+
+	@Override
+	public String toString() {
+		return "Standard [id=" + id + ", title=" + title + ", url=" + url + ", aId=" + aId + ", updatetime="
+				+ updatetime + ", document=" + document + "]";
+	}
 }

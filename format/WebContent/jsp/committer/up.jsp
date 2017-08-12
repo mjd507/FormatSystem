@@ -118,7 +118,7 @@
 				  <ul id="navigation">
 						<li onmouseover="displaySubMenu(this)" onmouseout="hideSubMenu(this)"> 
 						    <a href="#">
-						    ${committer.name}
+						    ${userName}
 						     <c:if test="${requestScope.unReadMsgNum!=0}">
 						    <span class="unread">${requestScope.unReadMsgNum }</span>
 						    </c:if>

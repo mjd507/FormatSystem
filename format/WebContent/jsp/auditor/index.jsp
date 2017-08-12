@@ -1,4 +1,4 @@
-d<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page language="java" import="com.zhuozhengsoft.pageoffice.*"%>
 <%@ taglib uri="http://java.pageoffice.cn" prefix="po"%>
@@ -10,12 +10,10 @@ d<%@ page language="java" contentType="text/html; charset=UTF-8"
 <title>格文致知—审核主页</title>
 
 
-<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css"
-	rel="stylesheet">
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"
-	type="text/javascript"></script>
-<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"
-	type="text/javascript"></script>
+<link rel="stylesheet"
+	href="/format/assets/bootstrap/css/bootstrap.min.css">
+<script src="/format/assets/jquery.min.js"></script>
+<script src="/format/assets/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- PageOffice.js文件和jquery.min.js引用 -->
 <script type="text/javascript" src="../jquery.min.js"></script>
@@ -88,29 +86,25 @@ d<%@ page language="java" contentType="text/html; charset=UTF-8"
 				<div class="panel-group" id="panel-699894">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<a class="panel-title collapsed" data-parent="#panel-699894"
-								href="javascript:showScmb();">上传模板</a>
+							<a class="panel-title collapsed" href="javascript:showScmb();">上传模板</a>
 						</div>
 					</div>
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<a class="panel-title collapsed" data-parent="#panel-699894"
-								href="javascript:showWdmb();">我的模板</a>
+							<a class="panel-title collapsed" href="javascript:showWdmb();">我的模板</a>
 						</div>
 					</div>
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<a class="panel-title collapsed" data-parent="#panel-699894"
-								href="javascript:showShwd();">审核文档</a>
+							<a class="panel-title collapsed" href="javascript:showShwd();">审核文档</a>
 						</div>
 					</div>
 
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<a class="panel-title collapsed" data-parent="#panel-699894"
-								href="javascript:showWdsh();">我的审核</a>
+							<a class="panel-title collapsed" href="javascript:showWdsh();">我的审核</a>
 						</div>
 					</div>
 				</div>
@@ -118,34 +112,49 @@ d<%@ page language="java" contentType="text/html; charset=UTF-8"
 
 			<div class="col-md-10 column" id="scmb" style="display:">
 				<!-- 上传模板部分开始 -->
-				
-				
-				
-				<form class="navbar-form navbar-left" role="search" action="/format/file/uploadStandard">
-				
-				        
-				        <div class="form-group">
-					    <label for="exampleInputFile">选择文件</label>
-					    <input  name="aid"  id="aid" type="hidden" value="1"/>
-					    <input type="file" class="form-control" id="document"
-						   name="document" style="border: none" />
-					    <p class="help-block">
-						支持.doc/.docx 格式的文件
-					    </p>
-				        </div>
-				
-				        <br>   
-						<div class="form-group">
-						<label for="title">模板名称</label>
-							<input class="form-control" name="title" id="title" type="text" />
-						</div> 
-						
-						<br>
-						<input type="submit" class="btn btn-default"/>创建模板
-						
+				<a id="modal-6988" href="#modal-container-6988" class="btn">上传文档</a>
+				<span style="color: red">${message}</span> <br> <br> <br>
+
+				<form action="/format/file/uploadStandard" method="post"
+					enctype="multipart/form-data">
+					<div class="modal fade" id="modal-container-6988">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close">×</button>
+									<h4 class="modal-title" id="myModalLabel">选择文档</h4>
+								</div>
+
+								<div class="modal-body">
+									<input type="hidden" value="${userId}" id="userId"
+										name="userId" />
+									<div class="form-group">
+										<label for="topicDiscription" class="col-md-2 control-label">模板标题</label>
+										<div class="col-md-10">
+											<input type="text" class="form-control" id="title"
+												name="title" />
+											<p id="title-hint" style="color: red;"></p>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<input id="document" name="document" type="file" />
+										<p class="help-block">选择doc...文件类型</p>
+									</div>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default">关闭</button>
+									<button type="submit" class="btn btn-primary">确认</button>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
 				</form>
-				
-				
+
+
 				<!-- 上传模板部分结束 -->
 			</div>
 

@@ -3,6 +3,7 @@ package com.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ import com.model.*;
 public class UserController {
 	
 	@RequestMapping("/login")
-	public String login(Model model,String id,String password,String duty,HttpServletRequest request) throws SQLException
+	public String login(Model model,String id,String password,String duty,HttpServletRequest request,HttpSession session) throws SQLException
 	{
 		
 		boolean isRight=false;
@@ -31,20 +32,25 @@ public class UserController {
 		
 		if(isRight==true)
 	{
-		request.setAttribute("login_status", 1);
-	    //
+		session.setAttribute("login_status", 1);
+	  
 		OrganizationDao od=new OrganizationDao();
 		List<Organization> orgList = od.getOrganizationList();
-		model.addAttribute("orgList",orgList);
+		session.setAttribute("orgList",orgList);
 		
 		if(duty.equals("admin"))
 		{
 			AdminDao ad=new AdminDao();
 			Admin admin=new Admin();
 			admin=ad.GetAdmin(id);
-			request.setAttribute("admin", admin);
-			request.setAttribute("userId", admin.getId());
-			request.setAttribute("userName", admin.getName());
+			session.setAttribute("admin", admin);
+			session.setAttribute("userId", admin.getId());
+			session.setAttribute("userName", admin.getName());
+			DepartmentDao dd=new DepartmentDao();
+			List<Department> list=new ArrayList<Department>();
+			list=dd.getDepartmentForAdminList(admin.getId());
+			session.setAttribute("depList",list);
+			session.setAttribute("oId", admin.getoId());
 			return "/jsp/admin/index";
 		}
 		else if(duty.equals("auditor"))
@@ -52,7 +58,8 @@ public class UserController {
 			AuditorDao ad=new AuditorDao();
 			Auditor auditor=new Auditor();
 			auditor=ad.GetAuditor(id);
-			request.setAttribute("auditor", auditor);
+			session.setAttribute("userId", auditor.getId());
+			session.setAttribute("userName", auditor.getName());
 			return "/jsp/auditor/index";
 		}
 		else if(duty.equals("committer"))
@@ -60,7 +67,8 @@ public class UserController {
 			CommitterDao cd=new CommitterDao();
 			Committer committer=new Committer();
 			committer=cd.GetCommitter(id);
-			request.setAttribute("committer", committer);
+			request.setAttribute("userId", committer.getId());
+			request.setAttribute("userName", committer.getName());
 			return "/jsp/committer/index";
 		}
 		else if(duty.equals("superAdmin"))
@@ -68,9 +76,9 @@ public class UserController {
 			SuperAdminDao sd=new SuperAdminDao();
 			SuperAdmin superAdmin=new SuperAdmin();
 			superAdmin=sd.GetSuperAdmin(id);
-			request.setAttribute("superAdmin", superAdmin);
-			request.setAttribute("userId", superAdmin.getId());
-			request.setAttribute("userName", superAdmin.getName());
+			session.setAttribute("superAdmin", superAdmin);
+			session.setAttribute("userId", superAdmin.getId());
+			session.setAttribute("userName", superAdmin.getName());
 			return "/jsp/superAdmin/index";
 		}
 	}

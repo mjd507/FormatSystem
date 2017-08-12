@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dao.CommitterDao;
-import com.dao.DepartmentDao;
-import com.dao.OrganizationDao;
 import com.model.Committer;
-import com.model.Department;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -29,7 +26,7 @@ public class CommitterController {
 	public @ResponseBody String getList(String userId,HttpServletRequest request, HttpServletResponse response) 
 	{
 		if(userId==null)return null;
-        System.out.println("userId:"+userId);
+        //System.out.println("userId:"+userId);
 		CommitterDao cd = new CommitterDao();
 		List<Committer> list = cd.getCommitterForAdminList(userId);
         if(list==null)
@@ -69,7 +66,7 @@ public class CommitterController {
 		
 		
 		CommitterDao od = new CommitterDao();
-		boolean b=od.updateOrganization(committer);
+		boolean b=od.updateCommitter(committer);
 		if(b==false)
 			 model.addAttribute("message","添加失败");
 		else model.addAttribute("message","操作成功");
@@ -114,7 +111,7 @@ public class CommitterController {
 			 model.addAttribute("message","添加失败");
 		else model.addAttribute("message","操作成功");
 		 System.out.println(b);
-        return "/jsp/superAdmin/index";
+        return "/jsp/admin/committer";
 
 	}
 }

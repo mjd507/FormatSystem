@@ -49,7 +49,8 @@ public class CommitterDao {
 		String sql=null; 
 		ResultSet rst=null;
 		PreparedStatement ptmt=null;
-		sql="select committer.id,committer.name,committer.telephone,committer.email,department.name as dName from committer,department,organization,admin where admin.oid=organization.id and department.oid=organization.id and committer.did=department.id and admin.id=?;";
+		sql="select committer.id,committer.name,committer.telephone,committer.email,department.name as dName "
+				+ "from committer,department,organization,admin where admin.oid=organization.id and department.oid=organization.id and committer.did=department.id and admin.id=?;";
         Connection conn = ConnectionManager.getInstance().getConnection();
         
        
@@ -67,6 +68,7 @@ public class CommitterDao {
 	        	committer.setEmail(rst.getString("email"));
 	        	System.out.println(committer.toString());
 	        	list.add(committer);
+	        	//System.out.println(committer.toString());
 	        }
 			
 			
@@ -81,7 +83,7 @@ public class CommitterDao {
         return list;
 	}
 
-	public boolean updateOrganization(Committer committer) {
+	public boolean updateCommitter(Committer committer) {
 		// TODO Auto-generated method stub
 		
 		String sql=null; 
