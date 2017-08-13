@@ -44,7 +44,9 @@ public class OrganizationController {
 	
 	@RequestMapping("/getOutList")
 	public @ResponseBody String getOutList(HttpServletRequest request, HttpServletResponse response) {
-System.out.println("start");
+   //try to add to select but fail
+		
+		//System.out.println("start");
 		OrganizationDao od = new OrganizationDao();
 		List<Organization> list = od.getOrganizationList();
 

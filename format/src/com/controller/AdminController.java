@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dao.AdminDao;
+import com.dao.DepartmentDao;
 import com.dao.OrganizationDao;
 import com.model.Admin;
+import com.model.Department;
 import com.model.Organization;
 
 import net.sf.json.JSONArray;
@@ -96,11 +98,10 @@ import net.sf.json.JSONObject;
 
 		}
 		
-		@RequestMapping("/add")
-		public String addRecord(Model model,String orgName,String addId,String addName) {
+		@RequestMapping("/getMember")
+		public String getMember(Model model,String orgName,String addId,String addName) {
 
-			//System.out.println(orgName+"-"+addId+"-"+addName+"-");
-           
+			
 			AdminDao ad=new AdminDao();
 			boolean b=ad.addAdmin(addId, addName,orgName);
 			if(b==false)
@@ -108,5 +109,10 @@ import net.sf.json.JSONObject;
 			else model.addAttribute("message","²Ù×÷³É¹¦");
             return "/jsp/superAdmin/gly";
 		}
+		
+		
+		
+
+		
 	}
 		

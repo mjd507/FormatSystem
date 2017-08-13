@@ -148,6 +148,72 @@ public class DepartmentDao {
 		
 		
 	}
+
+	public List<Department> getDepartmentForAdminList(String userId) {
+		// TODO Auto-generated method stub
+		
+		List<Department> list=new ArrayList<Department>();
+		String sql=null; 
+		ResultSet rst=null;
+		PreparedStatement ptmt=null;
+		sql="select organization.id as oId,organization.name as oName,department.id,department.name from organization,department,admin where department.oid=organization.id and admin.oid=organization.id and admin.id=?;";
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        
+       
+		try {
+			ptmt = conn.prepareStatement(sql);
+			ptmt.setString(1,userId);
+			rst=ptmt.executeQuery();
+	        while(rst.next())
+	        {
+	        	Department department=new Department();
+	        	department.setId(rst.getInt("id"));
+	        	department.setName(rst.getString("name"));
+	        	department.setoId(rst.getInt("oId"));
+	        	department.setoName(rst.getString("oName"));
+	        	list.add(department);
+	        }
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			ConnectionManager.close(conn,rst,ptmt);
+	        return null;
+		}
+         
+        
+        ConnectionManager.close(conn,rst,ptmt);
+        return list;
+	}
+
+	public boolean addDepartment(String addName, int oIdInt) {
+		// TODO Auto-generated method stub
+		String sql=null;
+		PreparedStatement ptmt=null;
+        Connection conn = ConnectionManager.getInstance().getConnection();
+        sql="INSERT INTO `format`.`department` (`name`, `oid`) VALUES (?,?);";
+
+        try {
+		ptmt = conn.prepareStatement(sql);
+		ptmt.setString(1,addName);
+		ptmt.setInt(2,oIdInt);
+        int rs = ptmt.executeUpdate();
+        if(rs!=0)
+		{
+			ConnectionManager.close(conn,ptmt);
+			return true;
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		ConnectionManager.close(conn,ptmt);
+		return false;
+	}
+	ConnectionManager.close(conn,ptmt);
+    return false;
+		
+		
+	}
 	
 	
 }

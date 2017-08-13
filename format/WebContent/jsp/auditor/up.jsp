@@ -113,29 +113,29 @@
            
             <div class="user fr">
 
-                  <c:if test="${requestScope.login_status!=1}">
+                  <c:if test="${sessionScope.login_status!=1}">
 				  <a href="<%=request.getContextPath()%>/jsp/login.jsp" class="log signUp">登录/注册</a>
 				  </c:if>
-				  <c:if test="${requestScope.login_status==1}">
+				  <c:if test="${sessionScope.login_status==1}">
 				  <ul id="navigation">
 						<li onmouseover="displaySubMenu(this)" onmouseout="hideSubMenu(this)"> 
 						    <a href="#">
-						    ${auditor.name}
-						     <c:if test="${requestScope.unReadMsgNum!=0}">
-						    <span class="unread">${requestScope.unReadMsgNum }</span>
+						    ${sessionScope.userName}
+						     <c:if test="${sessionScope.unReadMsgNum!=0}">
+						    <span class="unread">${sessionScope.unReadMsgNum }</span>
 						    </c:if>
 						    </a>
 							<ul>
 								<li>
-								     <c:if test="${requestScope.unReadMsgNum==0  }">
+								     <c:if test="${sessionScope.unReadMsgNum==0  }">
 									 <a href="#">消息中心</a>
 									 </c:if>
 									 
-									 <c:if test="${requestScope.unReadMsgNum!=0  }">
+									 <c:if test="${sessionScope.unReadMsgNum!=0  }">
 									 <div >
 									 <div style="float:left">
 									 <a href="#" >
-									 个人中心<span class="unread">${requestScope.unReadMsgNum }</span>
+									 个人中心<span class="unread">${sessionScope.unReadMsgNum }</span>
 									 </a>
 									 </div>
 									 </div>

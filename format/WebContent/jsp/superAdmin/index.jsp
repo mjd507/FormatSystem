@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,46 +11,51 @@
 <link rel="stylesheet"
 	href="/format/assets/bootstrap-table/src/bootstrap-table.css">
 <link rel="stylesheet" href="/format/assets/examples.css">
-<link rel="stylesheet"
-	href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
-
 <script src="/format/assets/jquery.min.js"></script>
 <script src="/format/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="/format/assets/bootstrap-table/src/bootstrap-table.js"></script>
 <script
 	src="/format/assets/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js"></script>
-<script
-	src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script src="/format/js/ga.js"></script>
-
 <script
 	src="/format/assets/bootstrap-table/src/extensions/reorder-columns/bootstrap-table-reorder-columns.js"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script
+
+<!-- <script
 	src="https://rawgit.com/akottr/dragtable/master/jquery.dragtable.js"></script>
+<script
+	src="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<link rel="stylesheet"
+	href="//rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ -->
+<link href="/format/bootstrap-table-editable.css" rel="stylesheet">
+<script
+	src="/format/bootstrap-editable/js/bootstrap-table-editable.min.js"></script>
+<script src="/format/jquery.dragtable.js"></script>
 </head>
 
 
-<body style='background: url("<%=request.getContextPath()%>/images/6.jpg") no-repeat;'>
-     <jsp:include page="up.jsp" />
-     <div class="container" style="min-height: 800px; min-width: 1000px;">
-    
+<body
+	style='background: url("<%=request.getContextPath()%>/images/6.jpg") no-repeat;'>
+
+
+	<jsp:include page="up.jsp" />
+
+	<div class="container" style="min-height: 800px; min-width: 1000px;">
 		<div id="toolbar">
+
 			<button id="delete" class="btn btn-default">批量删除</button>
 			<button id="load" class="btn btn-default">刷新</button>
-			<div class="col-md-2 column"style="float:right">
-							<a id="modal-createTopic" href="#modal-container-217103"
-								role="button" class="btn  btn-success glyphicon glyphicon-plus"
-								data-toggle="modal" style="font-size: 15px;float:right">新建组织</a>
+			<div class="col-md-2 column" style="float: right">
+				<a id="modal-createTopic" href="#modal-container-217103"
+					role="button" class="btn  btn-success glyphicon glyphicon-plus"
+					data-toggle="modal" style="font-size: 15px; float: right">新建组织</a>
 			</div>
-			<span style="color:red">${message}</span>
-			<br>
-			<br>
-			<br>
-			
-		</div>
+			<span style="color: red">${message}</span> <br> <br> <br>
 
-		<table id="table" 
+		</div>
+		<!--
+            <table id="table" 
 		    data-toggle="table" 
 		    data-pagination="true"
 			data-show-export="true" 
@@ -66,65 +71,71 @@
 			data-search="true" 
 			data-show-toggle="true"
 			data-reorderable-columns="true">
+            -->
+
+		<table id="table" data-toggle="table"
+			data-url="/format/organization/getList" data-filter-control="true"
+			data-filter-show-clear="true" data-pagination="true"
+			data-show-export="true" data-search="true" data-row-style="rowStyle">
+
 			<thead>
 				<tr>
 					<th data-field="state" data-checkbox="true"></th>
-					<th data-field="id" data-editable="true" data-sortable="true">编号</th>
-					<th data-field="name" data-editable="true" data-sortable="true">名称</th>
+					<th data-field="id" data-editable="false" data-sortable="true">编号</th>
+					<th data-field="name" data-editable="false" data-sortable="true">名称</th>
 					<th data-formatter="operateFormatter" data-events="operateEvents"
 						data-sortable="false">操作</th>
 				</tr>
 			</thead>
 		</table>
-		
-		 <!-- fade遮罩层 --> 
-			<div class="modal fade" id="modal-container-217103" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h4 class="modal-title" id="myModalLabel">
-								新建组织
-							</h4>
-						</div>
-						<div class="modal-body">
-							 
-							 
-							 
-							 <div class="row clearfix">
-											<div class="col-md-12 column">
-												<form class="form-horizontal" role="form"
-													action="/format/organization/add" method="POST" onsubmit="return checkOrg()"
-													enctype="multipart/form-data">
-													
-												
-													<div class="form-group">
-														<label for="addName"
-															class="col-md-2 control-label">名称</label>
-														<div class="col-md-10">
-															<input type="text" class="form-control"
-																id="addName" name="addName" />
-																<p id="addName-hint" style="color:red;"></p>
-														</div>
-													</div>
-													
-													<div class="modal-footer">
-														<button type="reset" class="btn btn-default"
-															data-dismiss="modal">关闭</button>
-														<button type="submit" class="btn btn-primary">保存</button>
-													</div>
 
-												</form>
-											</div>
-										</div>
-						</div>
-						
+		<!-- fade遮罩层 -->
+		<div class="modal fade" id="modal-container-217103" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h4 class="modal-title" id="myModalLabel">新建组织</h4>
 					</div>
-					
+					<div class="modal-body">
+
+
+
+						<div class="row clearfix">
+							<div class="col-md-12 column">
+								<form class="form-horizontal" role="form"
+									action="/format/organization/add" method="POST"
+									onsubmit="return checkOrg()" enctype="multipart/form-data">
+
+
+									<div class="form-group">
+										<label for="addName" class="col-md-2 control-label">名称</label>
+										<div class="col-md-10">
+											<input type="text" class="form-control" id="addName"
+												name="addName" />
+											<p id="addName-hint" style="color: red;"></p>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="reset" class="btn btn-default"
+											data-dismiss="modal">关闭</button>
+										<button type="submit" class="btn btn-primary">保存</button>
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+
 				</div>
 
-      </div>    
-		
+			</div>
+
+		</div>
+
 	</div>
 
 	<script>
@@ -172,7 +183,7 @@
 		function rowStyle(row, index) {
 			var classes = [ 'active', 'success', 'info', 'warning', 'danger' ];
 
-			if (index % 2 === 0 ) {
+			if (index % 2 === 0) {
 				return {
 					classes : classes[index % 5]
 				};
@@ -218,27 +229,39 @@
 			});
 		});
 		//checkOrg
-		function checkOrg()
-		{
-			
-			
-			if(document.getElementById("addName").value=="")
-			{
-			
-			alert("名称不能为空");
-			return false;
-			}
-			
-			if(document.getElementById("addName").value.length>20)
-			{
-			
-			alert("名称不能超过20字");
-			return false;
+		function checkOrg() {
+
+			if (document.getElementById("addName").value == "") {
+
+				alert("名称不能为空");
+				return false;
 			}
 
-		    return true;
-			
-		}	
+			if (document.getElementById("addName").value.length > 20) {
+
+				alert("名称不能超过20字");
+				return false;
+			}
+
+			return true;
+
+		}
+
+		$(function() {
+			$('#username').editable({
+				type : "text", //编辑框的类型。支持text|textarea|select|date|checklist等
+				title : "用户名", //编辑框的标题
+				disabled : false, //是否禁用编辑
+				emptytext : "空文本", //空值的默认文本
+				mode : "inline", //编辑框的模式：支持popup和inline两种模式，默认是popup
+				validate : function(value) { //字段验证
+					if (!$.trim(value)) {
+						return '不能为空';
+					}
+				}
+			});
+
+		});
 	</script>
 	<jsp:include page="../down.jsp" />
 </body>
