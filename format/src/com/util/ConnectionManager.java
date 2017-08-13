@@ -26,7 +26,7 @@ public class ConnectionManager {
         
       
         dataSource.setUser("root");  
-        dataSource.setPassword("0000"); 
+        dataSource.setPassword("root"); 
         dataSource.setJdbcUrl("jdbc:mysql://"+DBIP+":3306/format?useUnicode=true&characterEncoding=utf-8&useSSL=false");
         dataSource.setDriverClass("com.mysql.jdbc.Driver");  
         dataSource.setInitialPoolSize(5); 
